@@ -6,5 +6,129 @@ output: html_notebook
 
 
 ```{r}
+library(shiny)
+library(readr)
+library(dplyr)
+library(markdown)
+library(knitr)
+library(ggplot2)
+library (plotly)
+library(png)
+```
 
+```{r}
+
+   # Install patchwork package
+library("patchwork")  
+
+manning <- read_csv("manning.csv")
+
+g <- ggplot(manning, aes(x = season, y = epa))
+
+g1 <- g + geom_line(color = manning$team_color)+
+  xlim(1999, 2021)+
+  ylim(-75, 300)+
+  theme_classic()
+
+pic <- manning$headshot_url[1]
+
+library(magick)
+pic2 <- image_read(pic)
+
+image <- image_fill(pic2, 'none')
+raster <- as.raster(image)
+
+g2 <- g1 + annotation_raster(raster, 1998, 2002, 200, 300)
+```
+
+
+```{r}
+brady <- read_csv("brady.csv")
+
+b <- ggplot(brady, aes(x = season, y = epa))
+
+b1 <- b + geom_line(color = brady$team_color)+
+  xlim(1999, 2022)+
+  ylim(-75, 300)+
+  theme_classic()
+
+pic <- brady$headshot_url[1]
+
+pic2 <- image_read(pic)
+
+image <- image_fill(pic2, 'none')
+raster <- as.raster(image)
+
+
+b2 <- b1 + annotation_raster(raster, 2000, 2004, 200, 300)
+```
+
+
+
+```{r}
+ben <- read_csv("ben.csv")
+
+b <- ggplot(ben, aes(x = season, y = epa))
+
+b1 <- b + geom_line(color = ben$team_color)+
+  xlim(1999, 2022)+
+  ylim(-75, 300)+
+  theme_classic()
+
+pic <- ben$headshot_url[1]
+
+pic2 <- image_read(pic)
+
+image <- image_fill(pic2, 'none')
+raster <- as.raster(image)
+
+
+b3 <- b1 + annotation_raster(raster, 2000, 2004, 200, 300)
+```
+
+```{r}
+aaron <- read_csv("aaron.csv")
+
+b <- ggplot(aaron, aes(x = season, y = epa))
+
+b1 <- b + geom_line(color = aaron$team_color)+
+  xlim(1999, 2022)+
+  ylim(-75, 300)+
+  theme_classic()
+
+pic <- aaron$headshot_url[1]
+pic2 <- image_read(pic)
+
+image <- image_fill(pic2, 'none')
+raster <- as.raster(image)
+
+
+b4 <- b1 + annotation_raster(raster, 2000, 2004, 200, 300)
+
+b4
+
+subplot(nrows = 2,g2, b2, b3, b4)
+```
+
+```{r}
+cam <- read_csv("cam.csv")
+
+b <- ggplot(cam, aes(x = season, y = epa))
+
+b1 <- b + geom_line(color = cam$team_color)+
+  xlim(1999, 2022)+
+  ylim(-75, 300)+
+  theme_classic()
+
+pic <- cam$headshot_url[1]
+pic2 <- image_read(pic)
+
+image <- image_fill(pic2, 'none')
+raster <- as.raster(image)
+
+b5 <- b1 + annotation_raster(raster, 2000, 2004, 200, 300)
+
+b5
+
+subplot(nrows = 2,g2, b2, b5, b4)
 ```
